@@ -16,7 +16,7 @@ if (!defined('CC_PATH'))
 
 function couponMenu() {
      add_menu_page("Coupon Code Generator", "Coupon Code Generator", "manage_options", "coupon-options", 'coupon_options_callback', '/wp-content/plugins/woocommerce-coupon-codes/favicon.ico');
-};
+}
 add_action('plugins_loaded', 'checkPosted');
 add_action('admin_menu', 'couponMenu');
 
@@ -44,7 +44,7 @@ function coupon_options_callback() {
 		<input type="submit">
 	</form>
 <?php
-};
+}
 
 function codeGen() {
 	/* This function generates the coupon code. It adds the list of numbers to letters if the box has been ticked
@@ -151,7 +151,7 @@ fputcsv($output, array('Coupon Codes'));
 
 // loop over the rows, outputting them
 fclose($output);
-};
+}
 die();
-};
+}
 ?>

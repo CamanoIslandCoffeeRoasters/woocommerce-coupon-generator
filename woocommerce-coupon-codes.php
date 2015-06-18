@@ -133,34 +133,15 @@ function couponGen() {
 		$quantity--;
 	}
 
-header('Content-Disposition: attachment; filename=couponCodes.csv');
-header('Content-Type: text/csv; charset=utf-8');
-
-foreach ($coupons as $coupon) {
-	if(in_array($coupon, $wooCouponsExisting) == FALSE) {
-		couponAdd($coupon);
-		//echo"$coupon\r\n";
+	header('Content-Disposition: attachment; filename=couponCodes.csv');
+	header('Content-Type: text/csv; charset=utf-8');
+	
+	foreach ($coupons as $coupon) {
+		if(in_array($coupon, $wooCouponsExisting) == FALSE) {
+			couponAdd($coupon);
+			echo"$coupon\r\n";
+		}
 	}
-// output headers so that the file is downloaded rather than displayed
-			header("Pragma: public");
-			header("Expires: 0");
-			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-			header("Cache-Control: private", false);
-			header("Content-Type: application/octet-stream");
-			header("Content-Disposition: attachment; filename=\"couponCodes.csv\";" );
-			header("Content-Transfer-Encoding: binary");
-
-// create a file pointer connected to the output stream
-$output = fopen('couponCodes.csv', 'w');
-
-foreach ($coupons as $coupon) {
-    //fputcsv($output, $coupons);
-    echo"$coupon\r\n";
-}
-
-// loop over the rows, outputting them
-fclose($output);
-}
-exit;
+	exit;
 }
 ?>

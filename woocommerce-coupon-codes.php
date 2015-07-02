@@ -15,13 +15,13 @@ if (!defined('CC_PATH'))
     define('CC_PATH', plugin_dir_path(__FILE__));
 
 function couponMenu() {
-     add_menu_page("Coupon Code Generator", "Coupon Code Generator", "manage_options", "coupon-options", 'coupon_options_callback', '/wp-content/plugins/woocommerce-coupon-codes/favicon.ico');
+     add_menu_page("Coupon Code Generator", "Coupon Code Generator", "manage_options", "coupon-options", 'coupon_options_callback', '/wp-content/plugins/woocommerce-coupon-generator/favicon.ico');
 }
 add_action('plugins_loaded', 'checkPosted');
 add_action('admin_menu', 'couponMenu');
 
 function checkPosted() {
-        if (isset($_POST['quantity'])) {
+        if (isset($_POST['cquantity'])) {
         couponGen();
     }
 }
@@ -31,7 +31,7 @@ function coupon_options_callback() {
 	<h1>Coupon Code Gen</h1>
 	<h3>You can use this to generate coupon codes for affiliates. Wow, it sure looks fun! I hope you enjoy it!</h3>
 	<form action="" method="POST">
-		<input type="number" placeholder="1-10000" name="quantity" min="1" max="10000" style="display: inline-block; max-width: 100px;"><h3 style="display: inline-block;">&nbsp Amount of coupons to generate.</h3><br>
+		<input type="number" placeholder="1-10000" name="cquantity" min="1" max="10000" style="display: inline-block; max-width: 100px;"><h3 style="display: inline-block;">&nbsp Amount of coupons to generate.</h3><br>
 		<input type="checkbox" name="numbers" style="display: inline-block;"><h3 style="display: inline-block;">&nbsp Include numbers.</h3><br>
 		<input type="number" placeholder="1-29" name="length" min="1" max="29" style="display: inline-block; max-width: 100px;"><h3 style="display: inline-block;">&nbsp; Number of generated characters.</h3><br>
 		<input type="text" placeholder="Prefix" name="prefix" style="display: inline-block; text-align: center;"><h3 style="display: inline-block;">&nbsp- Generated content goes here. -&nbsp</h3><input style="display: inline-block; text-align: center;" type="text" placeholder="Suffix" name="suffix"><br>
@@ -108,11 +108,11 @@ function couponGen() {
 		array_push($wooCouponsExisting, $postTitle);
 	}
 	$coupons = array();
-	$quantity = $_POST['quantity'];
+	$cquantity = $_POST['cquantity'];
 	/* This while loop handles the coupon code generation and then checks it against a list of existing
 	 * coupons and its self for the purpose of originality.
 	 */
-	while($quantity > 0) {
+	while($cquantity > 0) {
 		$compiled = codeGen();
 		$i = 0;
 		/* This loop checks to see if the coupon that has been generated exists in either array, and if it does, 
@@ -130,7 +130,7 @@ function couponGen() {
 			// The lines below will add the coupon to the database with a function called couponAdd and add it to the internal array.
 			array_push($coupons, $compiled);
 		}
-		$quantity--;
+		$cquantity--;
 	}
 
 	header('Content-Disposition: attachment; filename=couponCodes.csv');
